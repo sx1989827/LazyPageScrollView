@@ -60,16 +60,21 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)LazyPageScrollViewPageChange:(LazyPageScrollView *)pageScrollView Index:(NSInteger)index PreIndex:(NSInteger)preIndex
+{
+    NSLog(@"%ld %ld",preIndex,index);
+}
+
 
 -(void)LazyPageScrollViewEdgeSwipe:(LazyPageScrollView *)pageScrollView Left:(BOOL)bLeft
 {
     if(bLeft)
     {
-        NSLog(@"1");
+        NSLog(@"left");
     }
     else
     {
-        NSLog(@"2");
+        NSLog(@"right");
     }
 }
 @end
