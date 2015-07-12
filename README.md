@@ -19,6 +19,8 @@
 
 4.对于pageview为 [LazyTableView](https://github.com/sx1989827/LazyTableView) 的时候，进行了优化，防止多个tableview会有过多cell的情况，占用大量资源。（后续会完善更多优化）
 
+5.源码仅有一个h和m文件，且没有使用其他任何第三方库。
+
 ##如何导入
 将工程目录下的LazyPageScrollView文件夹导入你的工程内，这个文件夹只有两个文件：LazyPageScrollView.h,LazyPageScrollView.m。你只需要包含LazyPageScrollView.h文件即可。
 
@@ -62,9 +64,28 @@
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
           //_pageView.selectedIndex=4;
       });
+     
+     -(void)LazyPageScrollViewPageChange:(LazyPageScrollView *)pageScrollView Index:(NSInteger)index PreIndex:(NSInteger)preIndex
+     {
+           NSLog(@"%ld %ld",preIndex,index);
+     }
+          
+     -(void)LazyPageScrollViewEdgeSwipe:(LazyPageScrollView *)pageScrollView Left:(BOOL)bLeft
+     {
+          if(bLeft)
+          {
+             NSLog(@"left");
+          }
+          else
+          {
+             NSLog(@"right");
+          }
+     }
 
+##综述
+代码里每个api和协议都有详细的注释，相信大家可以上手，具体的实现使用了大量的自动布局和绝对布局相结合的方式来布局，如果是自动布局的爱好者，可以一起交流一下，当然，本框架肯定还有很多不足，希望大家可以多多给我提建议，我会尽力完善。
 
-
-
+##联系方式
+QQ群：460483960 这是我们的ios项目的开发者qq群，这是一个纯粹的ios开发者社区，里面汇聚了众多有经验的ios开发者，没有hr和打扰和广告的骚扰，为您创造一个纯净的技术交流环境，如果您对我的项目以及对ios开发有任何疑问，都可以加群交流，欢迎您的加入~
 
 
