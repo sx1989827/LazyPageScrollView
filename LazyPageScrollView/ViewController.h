@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LazyPageScrollView.h"
 @interface ViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet LazyPageScrollView *pageView;
 
 @end
 

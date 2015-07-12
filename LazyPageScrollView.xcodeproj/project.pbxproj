@@ -14,6 +14,7 @@
 		B553A7391B4E10250029F952 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B553A7381B4E10250029F952 /* Images.xcassets */; };
 		B553A73C1B4E10250029F952 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B553A73A1B4E10250029F952 /* LaunchScreen.xib */; };
 		B553A7481B4E10250029F952 /* LazyPageScrollViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B553A7471B4E10250029F952 /* LazyPageScrollViewTests.m */; };
+		B553A7FE1B4E13F70029F952 /* LazyPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B553A7FD1B4E13F70029F952 /* LazyPageScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		B553A7411B4E10250029F952 /* LazyPageScrollViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LazyPageScrollViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B553A7461B4E10250029F952 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B553A7471B4E10250029F952 /* LazyPageScrollViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LazyPageScrollViewTests.m; sourceTree = "<group>"; };
+		B553A7FC1B4E13F70029F952 /* LazyPageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LazyPageScrollView.h; sourceTree = "<group>"; };
+		B553A7FD1B4E13F70029F952 /* LazyPageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LazyPageScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +84,7 @@
 		B553A72A1B4E10250029F952 /* LazyPageScrollView */ = {
 			isa = PBXGroup;
 			children = (
+				B553A7511B4E105D0029F952 /* LazyPageScrollView */,
 				B553A72F1B4E10250029F952 /* AppDelegate.h */,
 				B553A7301B4E10250029F952 /* AppDelegate.m */,
 				B553A7321B4E10250029F952 /* ViewController.h */,
@@ -117,6 +121,15 @@
 				B553A7461B4E10250029F952 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B553A7511B4E105D0029F952 /* LazyPageScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				B553A7FC1B4E13F70029F952 /* LazyPageScrollView.h */,
+				B553A7FD1B4E13F70029F952 /* LazyPageScrollView.m */,
+			);
+			path = LazyPageScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,6 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B553A7FE1B4E13F70029F952 /* LazyPageScrollView.m in Sources */,
 				B553A7341B4E10250029F952 /* ViewController.m in Sources */,
 				B553A7311B4E10250029F952 /* AppDelegate.m in Sources */,
 				B553A72E1B4E10250029F952 /* main.m in Sources */,
