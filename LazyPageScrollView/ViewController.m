@@ -18,6 +18,7 @@
     [super viewDidLoad];
     _pageView.delegate=self;
     [_pageView initTab:YES Gap:50 TabHeight:40 VerticalDistance:10 BkColor:[UIColor lightGrayColor]];
+    [_pageView addTab:@"aaa" ViewController:@"ChildFirstViewController" Param:@{@"str":@"zzzzzz"}];
     UIView *view=[[UIView alloc] init];
     view.backgroundColor=[UIColor orangeColor];
     [_pageView addTab:@"as1" View:view];
@@ -27,12 +28,7 @@
     view=[[UIView alloc] init];
     view.backgroundColor=[UIColor lightGrayColor];
     [_pageView addTab:@"d2f4" View:view];
-    view=[[UIView alloc] init];
-    view.backgroundColor=[UIColor purpleColor];
-    [_pageView addTab:@"reg" View:view];
-    view=[[UIView alloc] init];
-    view.backgroundColor=[UIColor grayColor];
-    [_pageView addTab:@"a3435" View:view];
+    [_pageView addTab:@"a345" ViewController:@"ChildSecondViewController" Param:nil];
     [_pageView enableTabBottomLine:YES LineHeight:3 LineColor:[UIColor redColor] LineBottomGap:5 ExtraWidth:10];
     [_pageView setTitleStyle:[UIFont systemFontOfSize:15] Color:[UIColor blackColor] SelColor:[UIColor redColor]];
     [_pageView enableBreakLine:YES Width:1 TopMargin:0 BottomMargin:0 Color:[UIColor groupTableViewBackgroundColor]];
@@ -77,6 +73,7 @@
         NSLog(@"right");
     }
 }
+
 @end
 
 

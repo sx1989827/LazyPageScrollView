@@ -15,6 +15,10 @@
 		B553A73C1B4E10250029F952 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B553A73A1B4E10250029F952 /* LaunchScreen.xib */; };
 		B553A7481B4E10250029F952 /* LazyPageScrollViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B553A7471B4E10250029F952 /* LazyPageScrollViewTests.m */; };
 		B553A7FE1B4E13F70029F952 /* LazyPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B553A7FD1B4E13F70029F952 /* LazyPageScrollView.m */; };
+		B569DCBA1B53B45C00110261 /* ChildFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B569DCB51B53B45C00110261 /* ChildFirstViewController.m */; };
+		B569DCBB1B53B45C00110261 /* ChildFirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B569DCB61B53B45C00110261 /* ChildFirstViewController.xib */; };
+		B569DCBC1B53B45C00110261 /* ChildSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B569DCB81B53B45C00110261 /* ChildSecondViewController.m */; };
+		B569DCBD1B53B45C00110261 /* ChildSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B569DCB91B53B45C00110261 /* ChildSecondViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +47,12 @@
 		B553A7471B4E10250029F952 /* LazyPageScrollViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LazyPageScrollViewTests.m; sourceTree = "<group>"; };
 		B553A7FC1B4E13F70029F952 /* LazyPageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LazyPageScrollView.h; sourceTree = "<group>"; };
 		B553A7FD1B4E13F70029F952 /* LazyPageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LazyPageScrollView.m; sourceTree = "<group>"; };
+		B569DCB41B53B45C00110261 /* ChildFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildFirstViewController.h; sourceTree = "<group>"; };
+		B569DCB51B53B45C00110261 /* ChildFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildFirstViewController.m; sourceTree = "<group>"; };
+		B569DCB61B53B45C00110261 /* ChildFirstViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChildFirstViewController.xib; sourceTree = "<group>"; };
+		B569DCB71B53B45C00110261 /* ChildSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildSecondViewController.h; sourceTree = "<group>"; };
+		B569DCB81B53B45C00110261 /* ChildSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildSecondViewController.m; sourceTree = "<group>"; };
+		B569DCB91B53B45C00110261 /* ChildSecondViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChildSecondViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +102,12 @@
 				B553A7351B4E10250029F952 /* Main.storyboard */,
 				B553A7381B4E10250029F952 /* Images.xcassets */,
 				B553A73A1B4E10250029F952 /* LaunchScreen.xib */,
+				B569DCB41B53B45C00110261 /* ChildFirstViewController.h */,
+				B569DCB51B53B45C00110261 /* ChildFirstViewController.m */,
+				B569DCB61B53B45C00110261 /* ChildFirstViewController.xib */,
+				B569DCB71B53B45C00110261 /* ChildSecondViewController.h */,
+				B569DCB81B53B45C00110261 /* ChildSecondViewController.m */,
+				B569DCB91B53B45C00110261 /* ChildSecondViewController.xib */,
 				B553A72B1B4E10250029F952 /* Supporting Files */,
 			);
 			path = LazyPageScrollView;
@@ -212,6 +228,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B569DCBB1B53B45C00110261 /* ChildFirstViewController.xib in Resources */,
+				B569DCBD1B53B45C00110261 /* ChildSecondViewController.xib in Resources */,
 				B553A7371B4E10250029F952 /* Main.storyboard in Resources */,
 				B553A73C1B4E10250029F952 /* LaunchScreen.xib in Resources */,
 				B553A7391B4E10250029F952 /* Images.xcassets in Resources */,
@@ -232,10 +250,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B569DCBA1B53B45C00110261 /* ChildFirstViewController.m in Sources */,
 				B553A7FE1B4E13F70029F952 /* LazyPageScrollView.m in Sources */,
 				B553A7341B4E10250029F952 /* ViewController.m in Sources */,
 				B553A7311B4E10250029F952 /* AppDelegate.m in Sources */,
 				B553A72E1B4E10250029F952 /* main.m in Sources */,
+				B569DCBC1B53B45C00110261 /* ChildSecondViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +450,7 @@
 				B553A74D1B4E10250029F952 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B553A74E1B4E10250029F952 /* Build configuration list for PBXNativeTarget "LazyPageScrollViewTests" */ = {
 			isa = XCConfigurationList;
@@ -438,6 +459,7 @@
 				B553A7501B4E10250029F952 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -16,7 +16,7 @@
 /**
  *  tab所对应的自定义view
  */
-@property (strong,nonatomic) UIView *view;
+@property (strong,nonatomic) id view;
 /**
  *  当前tab的附加用户信息
  */
@@ -137,6 +137,14 @@
  *  @param bOptimize 为YES，表示开启
  */
 -(void)enableOptimize:(BOOL)bOptimize;
+/**
+ *  添加ViewController，类似于UITab页的切换，当第一次切换到该ViewController的时候，才会加载ViewController，相应viewDidLoad，且每次切换都会相应viewWillAppear，viewDidAppear，viewWillDisappear，viewDidDisappear。
+ *
+ *  @param title tab title
+ *  @param vc    需要加载的viewController类的名字
+ *  @param param 初始化viewController时传递过去的参数，采取kvc的方式，字典里的key和ViewController的key一一对应。
+ */
+-(void)addTab:(NSString*)title ViewController:(NSString*)vc Param:(NSDictionary*)param;
 @end
 
 

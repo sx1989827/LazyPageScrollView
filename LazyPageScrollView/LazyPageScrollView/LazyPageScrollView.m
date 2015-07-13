@@ -41,11 +41,15 @@
     BOOL bPageOptimize;
     UISwipeGestureRecognizer *rightRec;
     UISwipeGestureRecognizer *LeftRec;
+    NSMutableArray *arrViewController;
+    UIViewController *selfVc;
+    NSInteger actionIndex;
 }
 @end
 @implementation LazyPageScrollView
 -(void)initView
 {
+    actionIndex=-1;
     rightRec=[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(onRightRec)];
     rightRec.delegate=self;
     rightRec.direction=UISwipeGestureRecognizerDirectionRight;
@@ -88,6 +92,18 @@
     lbLine.translatesAutoresizingMaskIntoConstraints=NO;
     [viewTopContent addSubview:lbLine];
     arrData=[[NSMutableArray alloc] initWithCapacity:30];
+    arrViewController=[[NSMutableArray alloc] initWithCapacity:30];
+}
+
+-(void)dealloc
+{
+    for(UIViewController *vc in arrViewController)
+    {
+        if((NSNull*)vc!=[NSNull null])
+        {
+            [vc removeFromParentViewController];
+        }
+    }
 }
 
 -(instancetype)init
@@ -203,10 +219,42 @@
     [self addConstraint:[NSLayoutConstraint constraintWithItem:viewContent attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:viewMain attribute:NSLayoutAttributeHeight multiplier:1 constant:0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:viewContent attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:viewMain attribute:NSLayoutAttributeWidth multiplier:arrData.count constant:0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:viewTopContent attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:viewTop attribute:NSLayoutAttributeHeight multiplier:1 constant:0]];
+    selfVc=[self topViewController];
     for(NSInteger i=0;i<arrData.count;i++)
     {
         LazyPageTabItem *item=arrData[i];
-        UIView *view=item.view;
+        UIView *view=nil;
+        BOOL bVc=NO;
+        if([item.view isKindOfClass:[NSString class]])
+        {
+            if(i==0)
+            {
+                bVc=YES;
+                Class cls=NSClassFromString(item.view);
+                UIViewController *vc=[[cls alloc] init];
+                [arrViewController addObject:vc];
+                if(item.info!=nil && [item.info isKindOfClass:[NSDictionary class]])
+                {
+                    for(NSString *key in item.info)
+                    {
+                        id obj=item.info[key];
+                        [vc setValue:obj forKey:key];
+                    }
+                }
+                [selfVc addChildViewController:vc];
+                view=vc.view;
+            }
+            else
+            {
+                view=[[UIView alloc] init];
+                [arrViewController addObject:[NSNull null]];
+            }
+        }
+        else if([item.view isKindOfClass:[UIView class]])
+        {
+            view=item.view;
+            [arrViewController addObject:[NSNull null]];
+        }
         view.translatesAutoresizingMaskIntoConstraints=NO;
         view.tag=100+i;
         [viewContent addSubview:view];
@@ -385,6 +433,17 @@
     {
         return;
     }
+    if(actionIndex!=-1)
+    {
+        if(actionIndex!=indexNew)
+        {
+            return;
+        }
+        else
+        {
+            actionIndex=-1;
+        }
+    }
     NSInteger preIndex=selIndex;
     selIndex=indexNew;
     UIButton *btn=(UIButton*)[viewTopContent viewWithTag:100+selIndex];
@@ -444,6 +503,7 @@
     {
         [selButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     }
+    actionIndex=sender.tag-100;
     [viewScrollMain setContentOffset:CGPointMake(viewScrollMain.bounds.size.width*(sender.tag-100), 0) animated:YES];
 }
 
@@ -473,11 +533,14 @@
     if(index>0 && index<arrData.count-1)
     {
         LazyPageTabItem *item=arrData[index+1];
-        UIView *view=item.view;
-        [self HandleView:view];
-        item=arrData[index-1];
-        view=item.view;
-        [self HandleView:view];
+        if([item.view isKindOfClass:[UIView class]])
+        {
+            UIView *view=item.view;
+            [self HandleView:view];
+            item=arrData[index-1];
+            view=item.view;
+            [self HandleView:view];
+        }
     }
     if(!bFitSize)
     {
@@ -497,6 +560,44 @@
         }
         CGRect rect=CGRectMake(x-tabGap/2, 0, btn.bounds.size.width+tabGap, btn.bounds.size.height);
         [viewScrollTop scrollRectToVisible:rect animated:YES];
+    }
+    LazyPageTabItem *item=arrData[index];
+    if([item.view isKindOfClass:[NSString class]])
+    {
+        if(arrViewController[index]==[NSNull null])
+        {
+            Class cls=NSClassFromString(item.view);
+            UIViewController *vc=[[cls alloc] init];
+            [arrViewController addObject:vc];
+            if(item.info!=nil && [item.info isKindOfClass:[NSDictionary class]])
+            {
+                for(NSString *key in item.info)
+                {
+                    id obj=item.info[key];
+                    [vc setValue:obj forKey:key];
+                }
+            }
+            [selfVc addChildViewController:vc];
+            arrViewController[index]=vc;
+            UIView *view=[viewContent viewWithTag:100+index];
+            [view addSubview:vc.view];
+            vc.view.translatesAutoresizingMaskIntoConstraints=YES;
+            vc.view.frame=view.bounds;
+            vc.view.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        }
+        else
+        {
+            UIViewController *vc=arrViewController[index];
+            [vc beginAppearanceTransition:YES animated:NO];
+            [vc endAppearanceTransition];
+        }
+    }
+    item=arrData[preIndex];
+    if([item.view isKindOfClass:[NSString class]])
+    {
+        UIViewController *vc=arrViewController[preIndex];
+        [vc beginAppearanceTransition:NO animated:NO];
+        [vc endAppearanceTransition];
     }
     if(_delegate && [_delegate respondsToSelector:@selector(LazyPageScrollViewPageChange:Index:PreIndex:)])
     {
@@ -558,6 +659,45 @@
 {
     return YES;
 }
+
+- (UIViewController*)topViewController {
+    UIViewController *vc=nil;
+    if([UIApplication sharedApplication].keyWindow.rootViewController!=nil)
+    {
+        vc=[UIApplication sharedApplication].keyWindow.rootViewController;
+    }
+    else if([[[UIApplication sharedApplication] delegate] window].rootViewController!=nil)
+    {
+        vc=[[[UIApplication sharedApplication] delegate] window].rootViewController;
+    }
+    return [self topViewControllerWithRootViewController:vc];
+}
+
+-(UIViewController*)topViewControllerWithRootViewController:(UIViewController*)rootViewController {
+    if ([rootViewController isKindOfClass:[UITabBarController class]]) {
+        UITabBarController* tabBarController = (UITabBarController*)rootViewController;
+        return [self topViewControllerWithRootViewController:tabBarController.selectedViewController];
+    } else if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* navigationController = (UINavigationController*)rootViewController;
+        return [self topViewControllerWithRootViewController:navigationController.visibleViewController];
+    } else if (rootViewController.presentedViewController) {
+        UIViewController* presentedViewController = rootViewController.presentedViewController;
+        return [self topViewControllerWithRootViewController:presentedViewController];
+    } else {
+        return rootViewController;
+    }
+}
+
+-(void)addTab:(NSString*)title ViewController:(NSString*)vc Param:(NSDictionary*)param
+{
+    LazyPageTabItem *item=[[LazyPageTabItem alloc] init];
+    item.title=title;
+    item.view=vc;
+    item.info=param;
+    [arrData addObject:item];
+}
+
+
 @end
 
 
