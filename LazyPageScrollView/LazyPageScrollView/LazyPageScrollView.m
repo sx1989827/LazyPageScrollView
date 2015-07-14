@@ -44,12 +44,14 @@
     NSMutableArray *arrViewController;
     UIViewController *selfVc;
     NSInteger actionIndex;
+    BOOL bGenerate;
 }
 @end
 @implementation LazyPageScrollView
 -(void)initView
 {
     actionIndex=-1;
+    bGenerate=NO;
     rightRec=[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(onRightRec)];
     rightRec.delegate=self;
     rightRec.direction=UISwipeGestureRecognizerDirectionRight;
@@ -165,21 +167,19 @@
 }
 
 
--(void)addTab:(NSString*)title View:(UIView*)view
+-(void)addTab:(NSString*)title View:(UIView*)view Info:(id)info
 {
     LazyPageTabItem *item=[[LazyPageTabItem alloc] init];
     item.title=title;
     item.view=view;
+    item.info=info;
     [arrData addObject:item];
 }
 
--(void)addTab:(LazyPageTabItem*)item
-{
-    [arrData addObject:item];
-}
 
 -(void)generate
 {
+    bGenerate=YES;
     if(_delegate && [_delegate respondsToSelector:@selector(LazyPageScrollViewEdgeSwipe:Left:)])
     {
         viewScrollMain.bounces=NO;
@@ -224,12 +224,10 @@
     {
         LazyPageTabItem *item=arrData[i];
         UIView *view=nil;
-        BOOL bVc=NO;
         if([item.view isKindOfClass:[NSString class]])
         {
             if(i==0)
             {
-                bVc=YES;
                 Class cls=NSClassFromString(item.view);
                 UIViewController *vc=[[cls alloc] init];
                 [arrViewController addObject:vc];
@@ -242,7 +240,11 @@
                     }
                 }
                 [selfVc addChildViewController:vc];
-                view=vc.view;
+                UIView *v=[[UIView alloc] init];
+                vc.view.frame=v.bounds;
+                vc.view.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+                [v addSubview:vc.view];
+                view=v;
             }
             else
             {
@@ -695,6 +697,11 @@
     item.view=vc;
     item.info=param;
     [arrData addObject:item];
+}
+
+-(NSInteger)getTabCount
+{
+    return arrData.count;
 }
 
 

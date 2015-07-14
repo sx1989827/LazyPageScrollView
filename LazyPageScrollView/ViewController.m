@@ -21,13 +21,13 @@
     [_pageView addTab:@"aaa" ViewController:@"ChildFirstViewController" Param:@{@"str":@"zzzzzz"}];
     UIView *view=[[UIView alloc] init];
     view.backgroundColor=[UIColor orangeColor];
-    [_pageView addTab:@"as1" View:view];
+    [_pageView addTab:@"as1" View:view Info:nil];
     view=[[UIView alloc] init];
     view.backgroundColor=[UIColor greenColor];
-    [_pageView addTab:@"a34" View:view];
+    [_pageView addTab:@"a34" View:view Info:nil];
     view=[[UIView alloc] init];
     view.backgroundColor=[UIColor lightGrayColor];
-    [_pageView addTab:@"d2f4" View:view];
+    [_pageView addTab:@"d2f4" View:view Info:nil];
     [_pageView addTab:@"a345" ViewController:@"ChildSecondViewController" Param:nil];
     [_pageView enableTabBottomLine:YES LineHeight:3 LineColor:[UIColor redColor] LineBottomGap:5 ExtraWidth:10];
     [_pageView setTitleStyle:[UIFont systemFontOfSize:15] Color:[UIColor blackColor] SelColor:[UIColor redColor]];

@@ -81,14 +81,9 @@
  *
  *  @param title tab title
  *  @param view  pageView
+     @param info  当前tab额外的用户数据
  */
--(void)addTab:(NSString*)title View:(UIView*)view;
-/**
- *  添加tab（以LazyPageTabItem的形式）
- *
- *  @param item
- */
--(void)addTab:(LazyPageTabItem*)item;
+-(void)addTab:(NSString*)title View:(UIView*)view Info:(id)info;
 /**
  *  生成LazyPageScrollView，需要设置完相关属性后调用该函数生成
  */
@@ -145,6 +140,12 @@
  *  @param param 初始化viewController时传递过去的参数，采取kvc的方式，字典里的key和ViewController的key一一对应。
  */
 -(void)addTab:(NSString*)title ViewController:(NSString*)vc Param:(NSDictionary*)param;
+/**
+ *  获取当前tab的数量
+ *
+ *  @return 当前tab的数量
+ */
+-(NSInteger)getTabCount;
 @end
 
 
