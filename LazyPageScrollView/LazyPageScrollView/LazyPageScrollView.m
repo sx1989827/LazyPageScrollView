@@ -7,6 +7,19 @@
 //
 
 #import "LazyPageScrollView.h"
+@implementation UIView(tag)
+-(UIView*)_viewWithTag:(NSInteger)index
+{
+    for(UIView *view in self.subviews)
+    {
+        if(view.tag==index)
+        {
+            return view;
+        }
+    }
+    return nil;
+}
+@end
 @implementation LazyPageTabItem
 
 @end
@@ -149,7 +162,7 @@
 
 -(void)enableTabBottomLine:(BOOL)bLine LineHeight:(CGFloat)height LineColor:(UIColor*)color LineBottomGap:(CGFloat)gap ExtraWidth:(CGFloat)width
 {
-	if(!bLine)
+    if(!bLine)
     {
         lbLine.hidden=YES;
         return;
@@ -269,7 +282,7 @@
         {
             [viewContent addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:viewContent attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
         }
-        UIView *preView=[viewContent viewWithTag:99+i];
+        UIView *preView=[viewContent _viewWithTag:99+i];
         if(preView)
         {
             [viewContent addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:preView attribute:NSLayoutAttributeWidth multiplier:1 constant:0]];
@@ -319,7 +332,7 @@
             {
                 [viewTopContent addConstraint:[NSLayoutConstraint constraintWithItem:btn attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:viewTopContent attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
             }
-            UIView *preBtn=[viewTopContent viewWithTag:tag-2];
+            UIView *preBtn=[viewTopContent _viewWithTag:tag-2];
             if(preBtn)
             {
                 [viewTopContent addConstraint:[NSLayoutConstraint constraintWithItem:btn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:preBtn attribute:NSLayoutAttributeWidth multiplier:1 constant:0]];
@@ -384,7 +397,7 @@
     }
     if(lbLine.hidden==NO)
     {
-        UIButton *btn=(UIButton*)[viewTopContent viewWithTag:100];
+        UIButton *btn=(UIButton*)[viewTopContent _viewWithTag:100];
         [viewTopContent addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[lbLine(==height)]-gap-|" options:0 metrics:@{@"height":@(lbLine.bounds.size.height),@"gap":@(LineBottomGap)} views:NSDictionaryOfVariableBindings(lbLine)]];
         conLineCenterX=[NSLayoutConstraint constraintWithItem:lbLine attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:btn attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
         conLineWidth=[NSLayoutConstraint constraintWithItem:lbLine attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:btn.intrinsicContentSize.width+LineExtraWidth];
@@ -423,7 +436,7 @@
         return;
     }
     selIndex=selectedIndex;
-    UIButton *btn=(UIButton*)[viewTopContent viewWithTag:100+selIndex];
+    UIButton *btn=(UIButton*)[viewTopContent _viewWithTag:100+selIndex];
     [self onAction:btn];
 }
 
@@ -448,7 +461,7 @@
     }
     NSInteger preIndex=selIndex;
     selIndex=indexNew;
-    UIButton *btn=(UIButton*)[viewTopContent viewWithTag:100+selIndex];
+    UIButton *btn=(UIButton*)[viewTopContent _viewWithTag:100+selIndex];
     [self btnChange:btn];
     [self onPageChange:selIndex PreIndex:preIndex];
 }
@@ -478,7 +491,7 @@
     {
         [selButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     }
-
+    
 }
 
 - (void)onAction:(UIButton *)sender
@@ -490,7 +503,7 @@
     if(titleColor)
     {
         [selButton setTitleColor:titleColor forState:UIControlStateNormal];
-
+        
     }
     else
     {
@@ -524,7 +537,7 @@
         [viewScrollMain removeGestureRecognizer:rightRec];
         [viewScrollMain removeGestureRecognizer:LeftRec];
     }
-    UIButton *btn=(UIButton*)[viewTopContent viewWithTag:100+index ];
+    UIButton *btn=(UIButton*)[viewTopContent _viewWithTag:100+index ];
     [viewTopContent removeConstraint:conLineCenterX];
     conLineCenterX=[NSLayoutConstraint constraintWithItem:lbLine attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:btn attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
     [viewTopContent addConstraint:conLineCenterX];
@@ -556,7 +569,7 @@
             x=tabGap/2;
             for(NSInteger i=100;i<btn.tag;i++)
             {
-                UIButton *preBtn=(UIButton*)[viewTopContent viewWithTag:i];
+                UIButton *preBtn=(UIButton*)[viewTopContent _viewWithTag:i];
                 x+=preBtn.bounds.size.width+tabGap;
             }
         }
@@ -570,7 +583,6 @@
         {
             Class cls=NSClassFromString(item.view);
             UIViewController *vc=[[cls alloc] init];
-            [arrViewController addObject:vc];
             if(item.info!=nil && [item.info isKindOfClass:[NSDictionary class]])
             {
                 for(NSString *key in item.info)
@@ -581,7 +593,7 @@
             }
             [selfVc addChildViewController:vc];
             arrViewController[index]=vc;
-            UIView *view=[viewContent viewWithTag:100+index];
+            UIView *view=[viewContent _viewWithTag:100+index];
             [view addSubview:vc.view];
             vc.view.translatesAutoresizingMaskIntoConstraints=YES;
             vc.view.frame=view.bounds;
