@@ -55,7 +55,7 @@
     UISwipeGestureRecognizer *rightRec;
     UISwipeGestureRecognizer *LeftRec;
     NSMutableArray *arrViewController;
-    UIViewController *selfVc;
+    __weak UIViewController *selfVc;
     NSInteger actionIndex;
     BOOL bGenerate;
 }
@@ -119,7 +119,11 @@
             [vc removeFromParentViewController];
         }
     }
+    [arrViewController removeAllObjects];
+    [arrData removeAllObjects];
+    
 }
+
 
 -(instancetype)init
 {
