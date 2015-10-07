@@ -25,6 +25,7 @@
 
 ##如何导入
 1.将工程目录下的LazyPageScrollView文件夹导入你的工程内，这个文件夹只有两个文件：LazyPageScrollView.h,LazyPageScrollView.m。你只需要包含LazyPageScrollView.h文件即可。
+
 2.如果你安装了cocoapods，在podfile里写入pod "LazyPageScrollView"即可。
 
 ##如何使用
