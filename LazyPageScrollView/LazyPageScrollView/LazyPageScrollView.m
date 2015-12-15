@@ -331,6 +331,12 @@
             {
                 [viewTopContent addConstraint:[NSLayoutConstraint constraintWithItem:btn attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:viewTopContent attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
                 selButton=btn;
+                if(titleSelColor) {
+                    [selButton setTitleColor:titleSelColor forState:UIControlStateNormal];
+                }
+                else {
+                    [selButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+                }
             }
             if(i==arrData.count-1)
             {
@@ -368,6 +374,12 @@
             if(tag==100)
             {
                 selButton=btn;
+                if(titleSelColor) {
+                    [selButton setTitleColor:titleSelColor forState:UIControlStateNormal];
+                }
+                else {
+                    [selButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+                }
             }
             btn.tag=tag++;
             if(titleColor)
