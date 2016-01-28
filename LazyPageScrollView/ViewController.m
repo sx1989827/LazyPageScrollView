@@ -29,8 +29,8 @@
     view.backgroundColor=[UIColor lightGrayColor];
     [_pageView addTab:@"d2f4" View:view Info:nil];
     [_pageView addTab:@"a345" ViewController:@"ChildSecondViewController" Param:nil];
-    [_pageView enableTabBottomLine:YES LineHeight:3 LineColor:[UIColor redColor] LineBottomGap:5 ExtraWidth:10];
-    [_pageView setTitleStyle:[UIFont systemFontOfSize:15] Color:[UIColor blackColor] SelColor:[UIColor redColor]];
+//    [_pageView enableTabBottomLine:YES LineHeight:3 LineColor:[UIColor redColor] LineBottomGap:5 ExtraWidth:10];
+    [_pageView setTitleStyle:[UIFont systemFontOfSize:15] SelFont:[UIFont systemFontOfSize:20] Color:[UIColor blackColor] SelColor:[UIColor redColor]];
     [_pageView enableBreakLine:YES Width:1 TopMargin:0 BottomMargin:0 Color:[UIColor groupTableViewBackgroundColor]];
     UIView* leftView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 0)];
     leftView.backgroundColor=[UIColor blackColor];
@@ -38,7 +38,18 @@
     UIView* rightView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 0)];
     rightView.backgroundColor=[UIColor purpleColor];
     _pageView.rightTopView=rightView;
-    [_pageView generate];
+    UIView *viewEffect=[[UIView alloc] init];
+    viewEffect.backgroundColor=[UIColor purpleColor];
+    viewEffect.layer.masksToBounds=YES;
+    viewEffect.layer.cornerRadius=5;
+    _pageView.viewTitleEffect=viewEffect;
+    [_pageView generate:^(UIButton *firstTitleControl, UIView *viewTitleEffect) {
+        CGRect frame= firstTitleControl.frame;
+        frame.size.height-=5;
+        frame.size.width-=6;
+        viewTitleEffect.frame=frame;
+        viewTitleEffect.center=firstTitleControl.center;
+    }];
     UIView *topView=[_pageView getTopContentView];
     UILabel *lb=[[UILabel alloc] init];
     lb.translatesAutoresizingMaskIntoConstraints=NO;
@@ -57,9 +68,17 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)LazyPageScrollViewPageChange:(LazyPageScrollView *)pageScrollView Index:(NSInteger)index PreIndex:(NSInteger)preIndex
+-(void)LazyPageScrollViewPageChange:(LazyPageScrollView *)pageScrollView Index:(NSInteger)index PreIndex:(NSInteger)preIndex TitleEffectView:(UIView *)viewTitleEffect SelControl:(UIButton *)selBtn
 {
     NSLog(@"%ld %ld",preIndex,index);
+    CGRect frame= selBtn.frame;
+    frame.size.height-=5;
+    frame.size.width-=6;
+    [UIView animateWithDuration:0.3 animations:^{
+        viewTitleEffect.frame=frame;
+        viewTitleEffect.center=selBtn.center;
+    }];
+    
 }
 
 

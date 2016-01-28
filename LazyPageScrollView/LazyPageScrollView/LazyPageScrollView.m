@@ -30,6 +30,7 @@
     UIScrollView *viewScrollTop;
     UIScrollView *viewScrollMain;
     UIFont *titleFont;
+    UIFont *titleSelFont;
     UIColor *titleColor;
     UIColor *titleSelColor;
     UIView *viewContent;
@@ -194,7 +195,7 @@
 }
 
 
--(void)generate
+-(void)generate:(void (^)(UIButton *firstTitleControl,UIView *viewTitleEffect))block
 {
     bGenerate=YES;
     if(_delegate && [_delegate respondsToSelector:@selector(LazyPageScrollViewEdgeSwipe:Left:)])
@@ -411,6 +412,12 @@
         width-=tabGap/2;
         [viewTopContent addConstraint:[NSLayoutConstraint constraintWithItem:viewTopContent attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil  attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:width]];
     }
+    if(_viewTitleEffect)
+    {
+        [viewTopContent addSubview:_viewTitleEffect];
+        [viewTopContent sendSubviewToBack:_viewTitleEffect];
+        _viewTitleEffect.frame=[viewTopContent viewWithTag:100].frame;
+    }
     if(lbLine.hidden==NO)
     {
         UIButton *btn=(UIButton*)[viewTopContent _viewWithTag:100];
@@ -420,6 +427,11 @@
         [viewTopContent addConstraint:conLineWidth];
         [viewTopContent addConstraint:conLineCenterX];
     }
+    [self layoutIfNeeded];
+    if(block)
+    {
+        block([viewTopContent viewWithTag:100],_viewTitleEffect);
+    }
 }
 
 -(LazyPageTabItem*)getTabItem:(NSInteger)index
@@ -428,9 +440,10 @@
 }
 
 
--(void)setTitleStyle:(UIFont*)font Color:(UIColor*)color SelColor:(UIColor*)selColor
+-(void)setTitleStyle:(UIFont*)font SelFont:(UIFont*)selFont Color:(UIColor*)color SelColor:(UIColor*)selColor
 {
     titleFont=font;
+    titleSelFont=selFont;
     titleColor=color;
     titleSelColor=selColor;
 }
@@ -498,6 +511,14 @@
     {
         [selButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
+    if(titleFont)
+    {
+        selButton.titleLabel.font=titleFont;
+    }
+    else
+    {
+        selButton.titleLabel.font=[UIFont systemFontOfSize:15];
+    }
     selButton=sender;
     if(titleSelColor)
     {
@@ -507,7 +528,10 @@
     {
         [selButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     }
-    
+    if(titleSelFont)
+    {
+        selButton.titleLabel.font=titleSelFont;
+    }
 }
 
 - (void)onAction:(UIButton *)sender
@@ -525,6 +549,14 @@
     {
         [selButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
+    if(titleFont)
+    {
+        selButton.titleLabel.font=titleFont;
+    }
+    else
+    {
+        selButton.titleLabel.font=[UIFont systemFontOfSize:15];
+    }
     selButton=sender;
     if(titleSelColor)
     {
@@ -534,8 +566,12 @@
     {
         [selButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     }
+    if(titleSelFont)
+    {
+        selButton.titleLabel.font=titleSelFont;
+    }
     actionIndex=sender.tag-100;
-    [viewScrollMain setContentOffset:CGPointMake(viewScrollMain.bounds.size.width*(sender.tag-100), 0) animated:YES];
+    [viewScrollMain setContentOffset:CGPointMake(viewScrollMain.bounds.size.width*(sender.tag-100), 0) animated:NO];
 }
 
 -(void)onPageChange:(NSInteger)index PreIndex:(NSInteger)preIndex
@@ -629,9 +665,9 @@
         [vc beginAppearanceTransition:NO animated:NO];
         [vc endAppearanceTransition];
     }
-    if(_delegate && [_delegate respondsToSelector:@selector(LazyPageScrollViewPageChange:Index:PreIndex:)])
+    if(_delegate && [_delegate respondsToSelector:@selector(LazyPageScrollViewPageChange:Index:PreIndex:TitleEffectView:SelControl:)])
     {
-        [_delegate LazyPageScrollViewPageChange:self Index:index PreIndex:preIndex];
+        [_delegate LazyPageScrollViewPageChange:self Index:index PreIndex:preIndex TitleEffectView:_viewTitleEffect SelControl:btn];
     }
 }
 

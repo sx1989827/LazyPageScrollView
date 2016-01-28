@@ -29,8 +29,10 @@
  *  @param pageScrollView 当前的pageScrollView
  *  @param index          当前的page的index索引
  *  @param preIndex       之前的page的index索引
+ *  @param viewTitleEffect       加载到title上的view
+ *  @param selBtn       当前选中的title控件
  */
--(void)LazyPageScrollViewPageChange:(LazyPageScrollView*)pageScrollView Index:(NSInteger)index PreIndex:(NSInteger)preIndex;
+-(void)LazyPageScrollViewPageChange:(LazyPageScrollView*)pageScrollView Index:(NSInteger)index PreIndex:(NSInteger)preIndex TitleEffectView:(UIView*)viewTitleEffect SelControl:(UIButton*)selBtn;
 /**
  *  当pageview滑动到边缘的时候，会调用这个委托
  *
@@ -86,8 +88,9 @@
 -(void)addTab:(NSString*)title View:(UIView*)view Info:(id)info;
 /**
  *  生成LazyPageScrollView，需要设置完相关属性后调用该函数生成
+  *  @param block   生成完成时调用的block
  */
--(void)generate;
+-(void)generate:(void (^)(UIButton *firstTitleControl,UIView* viewTitleEffect))block;
 /**
  *  获取指定index的item信息
  *
@@ -99,11 +102,12 @@
 /**
  *  设置tab Title的样式
  *
- *  @param font     自提
+ *  @param font     字体
+ *  @param selFont     选中后的字体
  *  @param color    颜色
  *  @param selColor 选中后的颜色
  */
--(void)setTitleStyle:(UIFont*)font Color:(UIColor*)color SelColor:(UIColor*)selColor;
+-(void)setTitleStyle:(UIFont*)font SelFont:(UIFont*)selFont Color:(UIColor*)color SelColor:(UIColor*)selColor;
 /**
  *  用户手指是否可以在pageView上滑动切换page
  *
@@ -146,6 +150,10 @@
  *  @return 当前tab的数量
  */
 -(NSInteger)getTabCount;
+/**
+ *  设置自定义的tab title切换效果view
+ */
+@property (strong,nonatomic) UIView *viewTitleEffect;
 @end
 
 
