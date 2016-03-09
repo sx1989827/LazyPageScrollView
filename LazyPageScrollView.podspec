@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "LazyPageScrollView"
-  s.version      = "1.1"
+  s.version      = "1.2"
   s.summary      = "A maximum of third parties to simplify the PageView and TabView switching"
 
   s.description  = <<-DESC
@@ -16,7 +16,7 @@ More than 3 create a way, and Xib seamless.
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author       = { "sx1989827" => "" }
   s.ios.deployment_target = '7.0'
-  s.source       = { :git => "https://github.com/sx1989827/LazyPageScrollView.git", :tag => '1.1'}
+  s.source       = { :git => "https://github.com/sx1989827/LazyPageScrollView.git", :tag => '1.2'}
   s.source_files = "LazyPageScrollView/LazyPageScrollView/*.{h,m}"
   s.requires_arc = true
 end

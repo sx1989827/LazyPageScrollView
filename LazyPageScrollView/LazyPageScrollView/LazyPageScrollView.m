@@ -464,8 +464,7 @@
     {
         return;
     }
-    selIndex=selectedIndex;
-    UIButton *btn=(UIButton*)[viewTopContent _viewWithTag:100+selIndex];
+    UIButton *btn=(UIButton*)[viewTopContent _viewWithTag:100+selectedIndex];
     [self onAction:btn];
 }
 
